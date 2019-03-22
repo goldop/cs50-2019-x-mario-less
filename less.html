@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less? -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- https://cdnjs.com/libraries/Primer -->
+        <style class="anchorjs"></style><link href="./build.css" rel="stylesheet">
+
+        <link href="./github.css" rel="stylesheet">
+
+        <link href="./build(1).css" rel="stylesheet">
+
+        <script src="./jquery-3.3.1.min.js.download"></script>
+
+        <!-- https://www.bryanbraun.com/anchorjs/ -->
+        <script src="./anchor.min.js.download"></script>
+
+        <!-- http://fitvidsjs.com/ -->
+        <script src="./jquery.fitvids.min.js.download"></script>
+
+        <!-- https://github.com/harttle/liquidjs --> 
+        <script src="./liquid.min.js.download"></script>
+
+        <!-- https://github.com/markdown-it/markdown-it -->
+        <script src="./markdown-it.min.js.download"></script>
+
+        <script>
+
+            $(function() {
+
+                // Add support for tasklist
+                // https://github.com/github/cmark/issues/23
+                let html = $('body').html();
+                html = html.replace(/<li>\[ \]\s+/gm, '<li class="task-list-item"><input class="task-list-item-checkbox" disabled type="checkbox"> ');
+                html = html.replace(/<li>\[x\]\s+/gm, '<li class="task-list-item"><input checked class="task-list-item-checkbox" disabled type="checkbox"> ');
+                $('body').html(html);
+
+                // Add anchors to headings
+                anchors.add();
+
+                // Enable deep-linking
+                $('.anchorjs-link').click(function() {
+                    let hash = $(this).attr('href');
+                    if (window.parent.location.hash === hash) { // In case user scrolled then re-clicked same anchor
+                        $(window.parent).trigger('hashchange');
+                    }
+                    else {
+                        window.parent.location.hash = hash;
+                    }
+                    return false;
+                });
+
+                // Next
+                $('[data-next]').each(function(index) {
+
+                    // Hide next elements
+                    next($(this)).addClass('next');
+
+                    // Listen for clicks
+                    $(this).click(function() {
+
+                        // Show next elements
+                        next($(this)).removeClass('next');
+
+                        // Remember button's offset
+                        let top = $(this).offset().top;
+                        let bottom = top + $(this).outerHeight(true);
+
+                        // Scroll to next elements
+                        scroll(bottom + 1);
+
+                        // Disable button
+                        $(this).prop('disabled', true).addClass('disabled');
+                    });
+                });
+
+                // Check
+                $('[data-check]').each(function() {
+
+                    // Parse popover
+                    let check = $(this).find('> p > button').first();
+                    let template = $(this).find('> script').first();
+                    let message = $(this).find('> .Popover-message').first();
+                    let results = $(this).find('> .Popover-message > div').first();
+                    let recheck = $(this).find('> .Popover-message > button').first();
+
+                    // Listen for clicks
+                    check.click(function() {
+
+                        // If closing
+                        if ($(this).hasClass('selected')) {
+
+                            // Close popover
+                            message.addClass('d-none');
+                            check.removeClass('selected');
+                        }
+
+                        // If opening
+                        else {
+
+                            // Open popover
+                            message.removeClass('d-none');
+                            check.addClass('selected');
+
+                            // Disable rechecking
+                            //recheck.html('Checking...');
+                            //recheck.prop('disabled', true);
+
+                            // TODO: associate below with a function so recheck can call it
+
+                            // 
+                            results.html('Checking...');
+
+                            // POST /check
+                            $.post('https://lab.cs50.io/cs50/labs/2019/x/mario/less/?check', {
+                                template: template.text()
+                            }, 'post')
+                            .done(function(data, textStatus, jqXHR) {
+                                results.html(data);
+                            })
+                            .fail(function(jqXHR, textStatus, errorThrown) {
+                                results.html(errorThrown);
+                            })
+                            .always(function() {
+
+                                // Enable rechecking
+                                //recheck.html('Recheck');
+                                //recheck.prop('disabled', false);
+                            });
+                        }
+                    });
+                });
+
+                // Spoiler
+                $('[data-spoiler]').each(function() {
+                    let button = $(this).find('> p > button').first();
+                    let message = $(this).find('> .Popover-message').first();
+                    button.click(function() {
+                        message.toggleClass('d-none');
+                        button.toggleClass('selected');
+                    });
+                });
+
+                // Add padding between emojis and text nodes
+                $('button').contents().filter(function() {
+                    return this.nodeType === Node.TEXT_NODE;
+                }).wrap('<span></span>');
+                $('button span').each(function() {
+                    $(this).html($(this).html().trim());
+                    if (!$(this).html()) {
+                        $(this).remove();
+                    }
+                });
+
+                // Listen for hashchange
+                $(window.parent).on('hashchange', function() {
+
+                    // Find heading
+                    let id = window.parent.location.hash.slice(1);
+                    if (!id) {
+                        return false;
+                    }
+                    let heading = $('#' + id);
+                    if (!heading.length) {
+                        return false;
+                    }
+
+                    // Elements through this heading
+                    previous(heading).removeClass('next').find('[data-next]').remove();
+
+                    // Elements after this heading through next button
+                    next(heading).removeClass('next');
+
+                    // Scroll to heading
+                    let top = heading.offset().top - parseInt(heading.css('marginTop')) + 1;
+                    scroll(top);
+                    return false;
+                });
+                $(window.parent).trigger('hashchange');
+
+                // Embed videos responsively
+                $('iframe[data-video]').parent().fitVids();
+
+                // Mimic paragraphs
+                $('iframe[data-video]').parent().addClass('my-3');
+
+                // Make site visible
+                $('body').removeClass('v-hidden');
+            });
+
+            // Previous slice(s) of elements
+            function previous(element) {
+
+                // All elements, in document order
+                let elements = $('body *');
+
+                // Elements through this one
+                let end = elements.index($(element)) + 1;
+                return elements.slice(0, end);
+            }
+
+            // Next slice of elements
+            function next(element) {
+
+                // All elements, in document order
+                let elements = $('body *');
+
+                // First element after this element
+                let start = elements.index(element) + 1;
+
+                // Following buttons
+                let buttons = elements.slice(start).find('[data-next]');
+
+                // Last element before next button
+                let end = (buttons.length > 0) ? elements.index(buttons[0]) : elements.length;
+
+                // Next slice
+                return elements.slice(start, end);
+            }
+
+            // Scroll to y
+            function scroll(y) {
+
+                // Margin required to scroll to top of viewport
+                let margin = Math.floor($(window).height() - ($('body').outerHeight() - y));
+                $('body').css('margin-bottom', Math.ceil(margin) + 'px');
+
+                // Scroll to next elements
+                $('html, body').animate({scrollTop: y}, 500);
+            }
+
+        </script>
+
+        <style>
+
+            /* Disable default borders */
+            iframe {
+                border: 0;
+                box-sizing: content-box;
+            }
+
+            /* Match headings */
+            .anchorjs-link {
+                color: inherit;
+            }
+            .anchorjs-link:hover {
+                text-decoration: none;
+            }
+
+            /* Align emoji with surrounding text better */
+            .markdown-body .emoji {
+                vertical-align: bottom;
+            }
+
+            /* Separate emoji from text by 1 character */
+            button *:not(:last-child) {
+                margin-right: 1ch;
+            }
+
+            /* Left-align buttons' text */
+            .btn-block {
+                text-align: left;
+            }
+
+            .next {
+                display: none;
+            }
+
+            /* Else increases button's height */
+            .Popover button p:last-child {
+                margin-bottom: 0;
+            }
+
+            /* Else of fixed size */
+            .Popover-message {
+                width: inherit;
+            }
+
+            /* Remain aligned with body */
+            .Popover-message--top-left {
+                left: inherit;
+            }
+
+            .Popover-message .Box {
+                margin-bottom: 10px; /* TODO: match <p>'s margin-bottom via Sass */
+            }
+
+            /* Match bg-blue-light */
+            .Popover-message.bg-blue-light button:not(:hover),
+            .Popover-message.bg-blue-light button.Box-btn-octicon,
+            .Popover-message.bg-blue-light .Box {
+                background-color: #f1f8ff;
+            }
+            .Popover-message.bg-blue-light::after {
+                border-bottom-color: #f1f8ff;
+            }
+
+            /* Match bg-gray-light */
+            .Popover-message.bg-gray-light::after {
+                border-bottom-color: #fafbfc;
+            }
+
+            /* Match bg-green-light */
+            .Popover-message.bg-green-light button:not(:hover) {
+                background-color: #dcffe4;
+            }
+            .Popover-message.bg-green-light::after {
+                border-bottom-color: #dcffe4;
+            }
+
+            /* Strip trailing whitespace from popovers */
+            .Popover-message > :last-child {
+                margin-bottom: 0;
+            }
+
+            /* From GitHub's own task-lists.scss, per Chrome DevTools */
+            .task-list-item {
+                list-style-type: none;
+            }
+            .task-list-item-checkbox {
+                margin: 0 0.2em 0.25em -1.6em;
+                vertical-align: middle;
+            }
+
+        </style>
+
+        <title>Mario</title>
+
+    <style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+
+    <body class="markdown-body p-3" style="margin-bottom: 544px;">
+
+        <h1 id="mario">Mario</h1>
+
+<div class="fluid-width-video-wrapper my-3" style="padding-top: 56.25%;"><iframe allowfullscreen="" class="border" data-video="" src="./C-5-22ZvW40.html" name="fitvid0"></iframe></div>
+
+<p><button class="btn btn-primary disabled" data-next="" type="button" disabled=""><span>Next</span></button></p>
+
+<h2 id="world-1-1" class="">World 1-1<a class="anchorjs-link" href="https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less?#world-1-1" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em/1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+<p class="">Toward the end of World 1-1 in Nintendo’s Super Mario Brothers, Mario must ascend right-aligned pyramid of blocks, a la the below.</p>
+
+<p class=""><img src="./pyramid.png" alt="screenshot of Mario jumping up a right-aligned pyramid" class=""></p>
+
+<p class="">Let’s recreate that pyramid in C, albeit in text, using hashes (<code class="highlighter-rouge">#</code>) for bricks, a la the below. Each hash is a bit taller than it is wide, so the pyramid itself is also be taller than it is wide.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">       #
+      ##
+     ###
+    ####
+   #####
+  ######
+ #######
+########
+</code></pre></div></div>
+
+<p class="">The program we’ll write will be called <code class="highlighter-rouge">mario</code>. And let’s allow the user to decide just how tall the pyramid should be by first prompting them for a positive integer between, say, 1 and 8, inclusive.</p>
+
+<p class="">Here’s how the program might work if the user inputs <code class="highlighter-rouge">8</code> when prompted:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">$ ./mario
+Height: 8
+       #
+      ##
+     ###
+    ####
+   #####
+  ######
+ #######
+########
+</code></pre></div></div>
+
+<p class="">Here’s how the program might work if the user inputs <code class="highlighter-rouge">4</code> when prompted:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">$ ./mario
+Height: 4
+   #
+  ##
+ ###
+####
+</code></pre></div></div>
+
+<p class="">Here’s how the program might work if the user inputs <code class="highlighter-rouge">2</code> when prompted:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">$ ./mario
+Height: 2
+ #
+##
+</code></pre></div></div>
+
+<p class="">And here’s how the program might work if the user inputs <code class="highlighter-rouge">1</code> when prompted:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">$ ./mario
+Height: 1
+#
+</code></pre></div></div>
+
+<p class="">If the user doesn’t, in fact, input a positive integer between 1 and 8, inclusive, when prompted, the program should re-prompt the user until they cooperate:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">$ ./mario
+Height: -1
+Height: 0
+Height: 42
+Height: 50
+Height: 4
+   #
+  ##
+ ###
+####
+</code></pre></div></div>
+
+<div class="Popover position-relative my-3" data-spoiler="">
+<p class=""><button class="btn"><span>Try It</span></button></p>
+<div class="Popover-message Popover-message--top-left p-4 Box box-shadow-extra-large bg-gray-light d-none">
+
+<p class="">To try out the staff’s implementation of this problem, execute</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">./mario
+</code></pre></div></div>
+
+<p class="">within <a href="http://bit.ly/2VAClIi" target="_blank" class="">this sandbox</a>.</p>
+
+
+</div>
+</div>
+
+<p class="">How to begin? Let’s approach this problem one step at a time.</p>
+
+<p class=""><button class="btn btn-primary disabled" data-next="" type="button" disabled=""><span>Next</span></button></p>
+
+<h2 id="pseudocode" class="">Pseudocode<a class="anchorjs-link" href="https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less?#pseudocode" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em/1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+<p class="">First, write in <code class="highlighter-rouge">pseudocode.txt</code> at right some pseudocode that implements this program, even if not (yet!) sure how to write it in code. There’s no one right way to write pseudocode, but short English sentences suffice. Recall how we wrote pseudocode for <a href="https://cdn.cs50.net/2018/fall/lectures/0/lecture0.pdf" target="_blank" class="">finding Mike Smith</a>. Odds are your pseudocode will use (or imply using!) one or more functions, conditions, Boolean expressions, loops, and/or variables.</p>
+
+<div class="Popover position-relative my-3" data-spoiler="">
+<p class=""><button class="btn"><span>Spoiler</span></button></p>
+<div class="Popover-message Popover-message--top-left p-4 Box box-shadow-extra-large bg-gray-light d-none">
+
+<p class="">There’s more than one way to do this, so here’s just one!</p>
+
+<ol class="">
+  <li class="">Prompt user for height</li>
+  <li class="">If height is less than 1 or greater than 8 (or not an integer at all), go back one step&lt;/li&gt;</li>
+  <li class="">Iterate from 1 through height:
+    <ol class="">
+      <li class="">On iteration <em class="">i</em>, print <em class="">i</em> hashes and then a newline</li>
+    </ol>
+  </li>
+</ol>
+
+<p class="">It’s okay to edit your own after seeing this pseudocode here, but don’t simply copy/paste ours into your own!</p>
+
+
+</div>
+</div>
+
+<p class=""><button class="btn btn-primary disabled" data-next="" type="button" disabled=""><span>Next</span></button></p>
+
+<h2 id="prompting-for-input" class="">Prompting for Input<a class="anchorjs-link" href="https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less?#prompting-for-input" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em/1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+<p class="">Whatever your pseudocode, let’s first write only the C code that prompts (and re-prompts, as needed) the user for input.</p>
+
+<p class="">Specifically, modify <code class="highlighter-rouge">mario.c</code> at right in such a way that it prompts the user for the pyramid’s height, storing their input in a variable, re-prompting the user again and again as needed if their input is not a positive integer between 1 and 8, inclusive. Then, simply print the value of that variable, thereby confirming (for yourself) that you’ve indeed stored the user’s input successfully, a la the below.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">$ ./mario
+Height: -1
+Height: 0
+Height: 42
+Height: 50
+Height: 4
+Stored: 4
+</code></pre></div></div>
+
+<div class="Popover position-relative my-3" data-spoiler="">
+<p class=""><button class="btn"><span>Hints</span></button></p>
+<div class="Popover-message Popover-message--top-left p-4 Box box-shadow-extra-large bg-gray-light d-none">
+
+<ul class="">
+  <li class="">Recall that you can compile your program with <code class="highlighter-rouge">make</code>.</li>
+  <li class="">Recall that you can print an <code class="highlighter-rouge">int</code> with <code class="highlighter-rouge">printf</code> using <code class="highlighter-rouge">%i</code>.</li>
+  <li class="">Recall that you can get an integer from the user with <code class="highlighter-rouge">get_int</code>.</li>
+  <li class="">Recall that <code class="highlighter-rouge">get_int</code> is declared in <code class="highlighter-rouge">cs50.h</code>.</li>
+  <li class="">Recall that we used a <code class="highlighter-rouge">do while</code> loop to prompt the user for a positive integer in class via <a href="https://sandbox.cs50.io/b56865fd-c861-425f-aad7-4adcf6831139" target="_blank" class=""><code class="highlighter-rouge">positive.c</code></a>.</li>
+</ul>
+
+
+</div>
+</div>
+
+<h2 id="building-the-opposite" class="">Building the Opposite<a class="anchorjs-link" href="https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less?#building-the-opposite" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em/1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+<p class="">Now that your program is (hopefully!) accepting input as prescribed, it’s time for another step.</p>
+
+<p class="">It turns out it’s a bit easier to build a left-aligned pyramid than right-, a la the below.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">#
+##
+###
+####
+#####
+######
+#######
+########
+</code></pre></div></div>
+
+<p class="">So let’s build a left-aligned pyramid first and then, once that’s working, right-align it instead!</p>
+
+<p class="">Modify <code class="highlighter-rouge">mario.c</code> at right such that it no longer simply prints the user’s input but instead prints a left-aligned pyramid of that height.</p>
+
+<div class="Popover position-relative my-3" data-spoiler="">
+<p class=""><button class="btn"><span>Hints</span></button></p>
+<div class="Popover-message Popover-message--top-left p-4 Box box-shadow-extra-large bg-gray-light d-none">
+
+<ul class="">
+  <li class="">Keep in mind that a hash is just a character like any other, so you can print it with <code class="highlighter-rouge">printf</code>.</li>
+  <li class="">Just as Scratch has a <a href="https://cdn.cs50.net/2018/fall/lectures/0/lecture0.pdf" target="_blank" class="">Repeat</a> block, so does C have a <a href="https://cdn.cs50.net/2018/fall/lectures/1/lecture1.pdf" target="_blank" class=""><code class="highlighter-rouge">for</code></a> loop, via which you can iterate some number times. Perhaps on each iteration, <em class="">i</em>, you could print that many hashes?</li>
+  <li class="">
+    <p class="">You can actually “nest” loops, iterating with one variable (e.g., <code class="highlighter-rouge">i</code>) in the “outer” loop and another (e.g., <code class="highlighter-rouge">j</code>) in the “inner” loop. For instance, here’s how you might print a square of height and width <code class="highlighter-rouge">n</code>, below. Of course, it’s not a square that you want to print!</p>
+
+    <div class="highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code class="">  for (int i = 0; i &lt; n; i++)
+  {
+      for (int j = 0; j &lt; n; j++)
+      {
+          printf("#");
+      }
+      printf("\n");
+  }
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+</div>
+</div>
+
+<p class=""><button class="btn btn-primary disabled" data-next="" type="button" disabled=""><span>Next</span></button></p>
+
+<h2 id="right-aligning-with-dots" class="">Right-Aligning with Dots<a class="anchorjs-link" href="https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less?#right-aligning-with-dots" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em/1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+<p class="">Let’s now right-align that pyramid by pushing its hashes to the right by prefixing them with dots (i.e., periods), a la the below.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">.......#
+......##
+.....###
+....####
+...#####
+..######
+.#######
+########
+</code></pre></div></div>
+
+<p class="">Modify <code class="highlighter-rouge">mario.c</code> in such a way that it does exactly that!</p>
+
+<div class="Popover position-relative my-3" data-spoiler="">
+<p class=""><button class="btn"><span>Hint</span></button></p>
+<div class="Popover-message Popover-message--top-left p-4 Box box-shadow-extra-large bg-gray-light d-none">
+
+<p class="">Notice how the number of dots needed on each line is the “opposite” of the number of that line’s hashes. For a pyramid of height 8, like the above, the first line has but 1 hash and thus 7 dots. The bottom line, meanwhile, has 8 hashes and thus 0 dots. Via what formula (or arithmetic, really) could you print that many dots?</p>
+
+
+</div>
+</div>
+
+<h3 id="how-to-test-your-code" class="">How to Test Your Code<a class="anchorjs-link" href="https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less?#how-to-test-your-code" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em/1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+
+<p class="">Does your code work as prescribed when you input</p>
+
+<ul class="">
+  <li class="">
+<code class="highlighter-rouge">-1</code> (or other negative numbers)?</li>
+  <li class="">
+<code class="highlighter-rouge">0</code>?</li>
+  <li class="">
+<code class="highlighter-rouge">1</code> through <code class="highlighter-rouge">8</code>?</li>
+  <li class="">
+<code class="highlighter-rouge">9</code> or other positive numbers?</li>
+  <li class="">letters or words?</li>
+  <li class="">no input at all, when you only hit Enter?</li>
+</ul>
+
+<p class=""><button class="btn btn-primary disabled" data-next="" type="button" disabled=""><span>Next</span></button></p>
+
+<h2 id="removing-the-dots" class="">Removing the Dots<a class="anchorjs-link" href="https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less?#removing-the-dots" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em/1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+<p class="">All that remains now is a finishing flourish! Modify <code class="highlighter-rouge">mario.c</code> in such a way that it prints spaces instead of those dots!</p>
+
+<div class="Popover position-relative my-3" data-spoiler="">
+<p class=""><button class="btn"><span>Hint</span></button></p>
+<div class="Popover-message Popover-message--top-left p-4 Box box-shadow-extra-large bg-gray-light d-none">
+
+<p class="">A space is just a press of your space bar, just as a period is just a press of its key! Just remember that <code class="highlighter-rouge">printf</code> requires that you surround both with double quotes!</p>
+
+
+</div>
+</div>
+
+<p class=""><button class="btn btn-primary disabled" data-next="" type="button" disabled=""><span>Next</span></button></p>
+
+<h2 id="how-to-submit" class="">How to Submit<a class="anchorjs-link" href="https://lab.cs50.io/_site/a8f1b8c2c2dd532c53e05446ee34c9753857831d/mario/less?#how-to-submit" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em/1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+
+<p class="">Execute the below, logging in with your GitHub username and password when prompted. For security, you’ll see asterisks (<code class="highlighter-rouge">*</code>) instead of the actual characters in your password.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="">submit50 cs50/2019/x/mario/less
+</code></pre></div></div>
+
+
+    
+
+
+</body></html>

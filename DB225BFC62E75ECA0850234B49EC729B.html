@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<!-- saved from url=(0132)https://api.codevolve.com/projects/15ed4555-0e92-4409-88df-ae5926c4298b?access_token=DB225BFC62E75ECA0850234B49EC729B&internal=false -->
+<html style="pointer-events: auto;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="https://api.codevolve.com/assets/favicon-60fc85d40c1e0f9c8e558ba1b512988064525e46d5bcc04741806417de427259.png">
+<title>editor+terminal | Next Tech</title>
+<link rel="stylesheet" media="screen, projection, print" href="./application-5f27d038952750eb05f6eedc20f75ef7af75d846282507fb62c7cc58e1bc9d85.css">
+
+<script type="text/javascript" async="" src="./f.txt"></script><script type="text/javascript" async="" src="./analytics.js.download"></script><script type="text/javascript" async="" src="./heap-1098342888.js.download"></script><script>
+  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+  heap.load("1098342888");
+</script>
+
+<script async="" src="./js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-53216025-1');
+  gtag('config', 'AW-860074897');
+</script>
+
+<script data-apikey="989bf793168afc3a5e5a515bf203341a" src="./bugsnag-2.min.js.download"></script>
+<script>
+  Bugsnag.releaseStage = "production";
+  Bugsnag.notifyReleaseStages = ["staging", "production", "projects"];
+  Bugsnag.user = {
+    id: "",
+    name: "",
+    email: ""
+  }
+</script>
+
+<script src="./project-bundle-e6e67e53cf90db17d2a1.js.download"></script>
+<script src="./application-bundle-c1f4e765f630ea0263be.js.download"></script>
+<script>
+  (function() {
+    var domain;
+  
+    if ('production' === 'development') {
+      window.root_url = window.location.origin;
+      window.api_url = window.location.origin;
+    } else {
+      domain = window.location.hostname.split('.').slice(-2).join('.');
+      if ('production' === 'staging') {
+        window.root_url = 'https://staging.' + domain;
+        window.api_url = 'https://api-staging.' + domain;
+      } else {
+        window.root_url = 'https://www.' + domain;
+        window.api_url = 'https://api.' + domain;
+      }
+    }
+  
+  }).call(this);
+</script>
+
+<script src="./polyfill.min.js.download"></script>
+
+<link href="./css" rel="stylesheet" type="text/css">
+<link href="./css(1)" rel="stylesheet" type="text/css">
+<link href="https://next.tech/" hreflang="en-us=" rel="alternate">
+<style>
+/* rendered from https://cs50.github.io/sandbox/styles.css?version=1553268515 */
+/* Pixelate images */
+#project:not(.editable) .remote-img-inner {
+    image-rendering: pixelated;
+}
+
+/* Eliminate min-width for mobile's sake */
+#project {
+    min-width: auto;
+}
+.modal-dialog {
+    width: auto;
+}
+
+/* Hide lefthand sidebar */
+#project:not(.editable) > #left-sidebar-nav {
+    display: none;
+}
+#project:not(.editable) > .project-inner {
+    width: 100% !important;
+}
+
+/* https://feedback.codevolve.com/bug-reports/p/thin-white-border-along-righthand-side-of-vertical-project-innerreflex-element */
+#project:not(.editable) > .project-inner > .reflex-element:not(.hide) {
+    flex-grow: 1 !important;
+}
+
+/* Match padding around text in tabs */
+#project:not(.editable) #directory-sidebar > .file-list {
+    padding-left: 8px;
+    padding-top: 3px;
+}
+
+/* Hide filetree's header */
+#project:not(.editable) #directory-sidebar > .directory-sidebar__header {
+    display: none;
+}
+
+/* Reveal filetree's ellipses */
+#project #directory-sidebar .file-list .file .file-menu .file__menu-button {
+    display: initial;
+}
+
+/* Shift filetree downward */
+#project:not(.editable) #directory-sidebar .file-list > ul > li > .file {
+    margin-top: 2px;
+}
+
+/* Don't highlight filetree's root on hover */
+#project:not(.editable) #directory-sidebar .file-list > ul > li > .file:hover .active-bar {
+    background-color: initial;
+}
+
+/* Hide filetree's root */
+#project:not(.editable) #directory-sidebar .file-list > ul > li > .file .filename {
+    display: none;
+}
+
+/* Deindent root's children */
+#project:not(.editable) #directory-sidebar .file-list > ul > li > ul {
+    padding-left: 0 !important;
+}
+
+/* Change filetree's first ellipsis to a plus */
+/* https://fontawesome.com/icons/plus?style=solid, http://fatopng.com/fontawesome-to-base64 */
+#project:not(.editable) #directory-sidebar .file-list > ul > li > .file .file-menu .file__menu-button::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABaklEQVQ4jaWUsUoEMRRFz12WjGyxlcgWIhYiaCP4CfoLFv6Fn+NPWFgLgghWIiiINhYiFltYLSJmkL0WzmiIcdfVC4FM8nLe5b1kZExJday7wADo20ZSDQxDFZ6LBxp1JuytAPvAuaQL28fAziQYQHfC3iKwbrvXfC8BG/8BdgAkfVubpKkBqexyvWcCppDM7ezAprtTIakUY+wDu7bXJHUSyJLtLaCfxF9KOs0SjoEr4CBU4VkxxlXbZ5LmSw6/OSg7fgC2QxXuOkCQNN8ezmuWj1Ii2wtAgK8ajtvg1IFt0kTtvOBy3E66wAg4AZazoF5ThvSujoCnnCbpxvYIPpoSbK8CA0lp1zdt70kaJI4PJe23jiVheww8SroLVXjrhirUwHUzPlXHGkkvmZOHUIWj3GGqH+/hb17FTMDS9fjX02tqk6u09jugpCFwn0CegNtpQP30x46vMTQd7gPYroFhNVeN/gT8q94B/WeewuZkyj4AAAAASUVORK5CYII=');
+}
+
+/* Hide "No Files" */
+#project:not(.editable) #directory-sidebar .file-list .directory-no-files {
+    display: none;
+}
+
+/* Hide text in empty panes */
+#project:not(.editable) .empty-pane-inner {
+    display: none;
+}
+
+/* Hide icons */
+#project:not(.editable) .pane-bottom-nav {
+    display: none;
+}
+#project:not(.editable) .code-space .codemirror-ide-editor {
+    max-height: 100%;
+}
+
+/* Allow GUI to grow */
+#project .full-gui .inner .full-gui-frame-outer {
+    max-height: none;
+}
+
+</style>
+<script>
+/* rendered from http://cs50.github.io/sandbox/scripts.js?version=1553268515 */
+/* CS50 scripts.js */
+
+</script>
+
+<script src="./f(1).txt"></script></head>
+<body class="project" style="overflow: hidden;">
+<div id="flash-messages"></div>
+<div id="main-container" style="padding-top: 0px;">
+<div class="contents clearfix">
+<div id="ide-anchor"><div id="project" class="dark two-pane-wide  "><div id="left-sidebar-nav" class="workspace"><div id="left-sidebar-nav-inner"><button id="workspace-icon" class="left-sidebar-nav-item active" data-toggle="tooltip" data-original-title="Workspace" data-placement="auto right"><i class="fal fa-code"></i></button><div class="left-sidebar-nav-lower"><button id="help-icon" class="lower-icon" data-toggle="tooltip" data-title="Help" data-placement="auto right" data-original-title="" title=""><i class="far fa-question-circle"></i></button><button id="settings-icon" class="lower-icon" data-toggle="tooltip" data-title="Settings" data-placement="auto right" data-original-title="" title=""><i class="far fa-cog"></i></button></div></div></div><div id="dropzone__outer"><div id="dropzone" class="dropzone"><i class="far fa-upload fa-2x"></i>Drop file(s) to upload</div><div id="dropzone__cancel" class="dropzone__cancel">Drop here to cancel</div></div><div class="reflex-layout reflex-container vertical project-inner"><div class="reflex-element hide" style="-webkit-box-flex: 0.00110742; flex: 0.00110742 1 0%;"><div style="height: 100%; width: 100%;"></div></div><div class="reflex-splitter is-light-theme" style="display: none;"></div><div class="reflex-element " style="-webkit-box-flex: 0.998893; flex: 0.998893 1 0%;"><div style="height: 100%; width: 100%;"><div id="directory-sidebar" class="directory-sidebar__isHidden"><div class="directory-sidebar__header">Filetree</div><ul class="file-list"><ul style="list-style: none; background-color: rgb(33, 37, 43); margin: 0px; padding: 0px; color: rgb(157, 165, 171); font-family: &quot;lucida grande&quot;, tahoma, verdana, arial, sans-serif; font-size: 14px;"><li style="position: relative;"><div class="file "><div class="active-bar"></div><div class="file__inner"><div class="filename filename--folder-open" data-toggle="tooltip" data-placement="right" data-title="/root/sandbox" data-original-title="" title=""><span class="filename__inner">/root/sandbox</span></div><div class="file-menu"><button class="btn btn-text btn-gray file__menu-button "></button><div class="file-menu-items"><button data-toggle="tooltip" data-placement="right" data-title="Create or Upload File" class="btn btn-text btn-gray file__menu-item-create-file" data-original-title="" title="">New File</button><button data-toggle="tooltip" data-placement="right" data-title="Create Directory" class="btn btn-text btn-gray file__menu-item-create-directory" data-original-title="" title="">New Directory</button></div></div></div></div><ul style="list-style: none; padding-left: 19px;"><li style="position: relative;"><div class="file "><div class="active-bar"></div><div class="file__inner"><div class="filename filename--generic" data-toggle="tooltip" data-placement="right" data-title="/root/sandbox/mario" data-original-title="" title=""><span class="filename__inner">mario</span></div><div class="file-menu"><button class="btn btn-text btn-gray file__menu-button "></button><div class="file-menu-items"><button data-toggle="tooltip" data-placement="right" data-title="Rename" class="btn btn-text btn-gray file__menu-item-rename" data-original-title="" title="">Rename File</button><button data-toggle="tooltip" data-placement="right" data-title="Duplicate File" class="btn btn-text btn-gray file__menu-item-duplicate" data-original-title="" title="">Duplicate File</button><button data-toggle="tooltip" data-placement="right" data-title="Download" class="btn btn-text btn-gray file__menu-item-download" data-original-title="" title="">Download</button><button data-toggle="tooltip" data-placement="right" data-title="Delete" class="btn btn-text btn-gray file__menu-item-delete" data-original-title="" title="">Delete File</button></div></div></div></div></li><li style="position: relative;"><div class="file active"><div class="active-bar"></div><div class="file__inner"><div class="filename filename--code" data-toggle="tooltip" data-placement="right" data-title="/root/sandbox/mario.c" data-original-title="" title=""><span class="filename__inner">mario.c</span></div><div class="file-menu"><button class="btn btn-text btn-gray file__menu-button "></button><div class="file-menu-items"><button data-toggle="tooltip" data-placement="right" data-title="Rename" class="btn btn-text btn-gray file__menu-item-rename" data-original-title="" title="">Rename File</button><button data-toggle="tooltip" data-placement="right" data-title="Duplicate File" class="btn btn-text btn-gray file__menu-item-duplicate" data-original-title="" title="">Duplicate File</button><button data-toggle="tooltip" data-placement="right" data-title="Download" class="btn btn-text btn-gray file__menu-item-download" data-original-title="" title="">Download</button><button data-toggle="tooltip" data-placement="right" data-title="Delete" class="btn btn-text btn-gray file__menu-item-delete" data-original-title="" title="">Delete File</button></div></div></div></div></li><li style="position: relative;"><div class="file "><div class="active-bar"></div><div class="file__inner"><div class="filename filename--generic" data-toggle="tooltip" data-placement="right" data-title="/root/sandbox/pseudocode.txt" data-original-title="" title=""><span class="filename__inner">pseudocode.txt</span></div><div class="file-menu"><button class="btn btn-text btn-gray file__menu-button "></button><div class="file-menu-items"><button data-toggle="tooltip" data-placement="right" data-title="Rename" class="btn btn-text btn-gray file__menu-item-rename" data-original-title="" title="">Rename File</button><button data-toggle="tooltip" data-placement="right" data-title="Duplicate File" class="btn btn-text btn-gray file__menu-item-duplicate" data-original-title="" title="">Duplicate File</button><button data-toggle="tooltip" data-placement="right" data-title="Download" class="btn btn-text btn-gray file__menu-item-download" data-original-title="" title="">Download</button><button data-toggle="tooltip" data-placement="right" data-title="Delete" class="btn btn-text btn-gray file__menu-item-delete" data-original-title="" title="">Delete File</button></div></div></div></div></li></ul></li></ul></ul></div><div id="panes-outer"><div id="inner1"><div class="reflex-layout reflex-container horizontal "><div class="reflex-element " style="-webkit-box-flex: 0.55; flex: 0.55 1 0%;"><div style="height: 100%; width: 100%;"><div id="pane1" style="position: relative;"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; width: 913px; height: 380px;"></div></div><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; width: 200%; height: 200%;"></div></div></div><div class="pane-components"><div id="tab-bar-6130689569815191" class="tabs project-files tab-bar "><button class="btn btn-text btn-gray nav-icon dir-icon " data-toggle="tooltip" data-original-title="Open Directory Sidebar" data-placement="auto bottom"><i class="fas fa-folder"></i></button><ul class="tabs" id="file-list-ul"><li class="tab js-tab-tooltip active tab--file-editor" data-toggle="tooltip" data-original-title="/root/sandbox/mario.c" data-placement="auto bottom"><span class="tab-name ">mario.c</span><span class="tab-icon"><i class="far fa-times"></i></span></li><button class="btn btn-text btn-gray nav-icon btn-circle" data-toggle="tooltip" data-original-title="New File or Tab" data-placement="auto bottom"><i class="fal fa-plus"></i></button></ul></div><div id="component-file-editor-1078301" class="pane-components__pane-component "><div id="code-space-6226697161749928" class="code-space editor-container dark "><div id="codemirror-ide-editor-6226697161749928" class="codemirror-ide-editor"><div class="CodeMirror cm-s-dark CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 33px;"><textarea autocorrect="false" autocapitalize="false" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true" style="display: block; bottom: 0px;"><div style="min-width: 1px; height: 853px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 29px; margin-bottom: -6px; border-right-width: 24px; min-height: 853px; padding-right: 6px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>39</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 22.4px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation" style=""><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Gaylord Brubaker</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Grey_hair_op</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">3</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// 22 March 2019</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">4</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// File name Mario.c</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">5</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Building a square requires 2 "for loops"</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">6</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Building a pyramid requires 3 "for loops" 2 of which are local variables.</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">7</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">8</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#include &lt;cs50.h&gt;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">9</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#include &lt;stdio.h&gt;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">10</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-type">int</span> <span class="cm-def">get_positive_int</span>(<span class="cm-variable">string</span> <span class="cm-variable">prompt</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">11</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-type">int</span> <span class="cm-def">main</span>(<span class="cm-type">void</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">12</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">13</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-type">int</span> <span class="cm-variable">i</span> <span class="cm-operator">=</span> <span class="cm-variable">get_positive_int</span>(<span class="cm-string">"Enter positive integer; Height: "</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">14</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">printf</span>(<span class="cm-string">"%i"</span>, <span class="cm-variable">i</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">15</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">16</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-type">int</span> <span class="cm-def">get_positive_int</span>(<span class="cm-variable">string</span> <span class="cm-variable">prompt</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">17</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">18</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-type">int</span> <span class="cm-variable">i</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">19</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">do</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">20</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  {</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">21</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">i</span> <span class="cm-operator">=</span> <span class="cm-variable">get_int</span>(<span class="cm-string">"%s"</span>, <span class="cm-variable">prompt</span>); &nbsp; &nbsp;<span class="cm-comment">// Prompts user for positive integer, height.</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">22</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">23</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">while</span> (<span class="cm-variable">i</span> <span class="cm-operator">&lt;</span> <span class="cm-number">1</span> <span class="cm-operator">||</span> <span class="cm-variable">i</span> <span class="cm-operator">&gt;</span> <span class="cm-number">8</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">24</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 24px; width: 1px; border-bottom: 0px solid transparent; top: 853px;"></div><div class="CodeMirror-gutters" style="height: 877px; left: 0px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div></div></div></div></div><div class="pane-bottom-nav"><button data-toggle="tooltip" data-placement="top" data-title="Rename File" class="btn btn-text btn-blue bold" data-original-title="" title=""><i class="fas fa-pencil"></i></button><button data-toggle="tooltip" data-placement="top" data-title="Delete File" class="btn btn-text btn-red bold" data-original-title="" title=""><i class="fas fa-trash"></i></button><button data-toggle="tooltip" data-placement="top" data-title="Download File" class="bold btn btn-text btn-white" data-original-title="" title=""><i class="fas fa-download"></i></button></div><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; width: 913px; height: 340px;"></div></div><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; width: 200%; height: 200%;"></div></div></div></div></div></div></div></div></div><div class="reflex-splitter "></div><div class="reflex-element " style="-webkit-box-flex: 0.45; flex: 0.45 1 0%;"><div style="height: 100%; width: 100%;"><div id="pane2" style="position: relative;"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; width: 913px; height: 313px;"></div></div><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; width: 200%; height: 200%;"></div></div></div><div class="pane-components"><div id="tab-bar-16409611808860625" class="tabs project-files tab-bar "><ul class="tabs" id="file-list-ul"><li class="tab js-tab-tooltip active tab--terminal" data-toggle="tooltip" data-original-title="/bin/bash" data-placement="auto bottom"><span class="tab-name "><span><i class="far fa-terminal"></i> Terminal</span></span><span class="tab-icon"><i class="far fa-times"></i></span></li><button class="btn btn-text btn-gray nav-icon btn-circle" data-toggle="tooltip" data-original-title="New File or Tab" data-placement="auto bottom"><i class="fal fa-plus"></i></button></ul></div><div id="component-terminal-1533705" class="pane-components__pane-component "><div id="terminal-34317635127673185" class="terminal-wrapper running  dark" style="background-color: rgb(30, 35, 37); position: relative;"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; width: 913px; height: 273px;"></div></div><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; width: 200%; height: 200%;"></div></div></div><div class="terminal-tab-content  terminal-tab-content--full-height"><div id="term-34317635127673185" class="tab-pane active"><div class="terminal-output" id="term-inner-34317635127673185"><div dir="ltr" class="terminal xterm" tabindex="0"><div class="xterm-viewport" style="background-color: rgb(30, 35, 37);"><div class="xterm-scroll-area" style="height: 263px;"></div></div><div class="xterm-screen" style="width: 880px; height: 240px;"><div class="xterm-helpers"><textarea class="xterm-helper-textarea" aria-label="Terminal input" aria-multiline="false" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0"></textarea><div class="composition-view"></div><span class="xterm-char-measure-element" aria-hidden="true" style="font-family: &quot;Ubuntu Mono&quot;; font-size: 16px;">W</span></div><canvas class="xterm-text-layer" width="1100" height="300" style="z-index: 0; width: 880px; height: 240px;"></canvas><canvas class="xterm-selection-layer" width="1100" height="300" style="z-index: 1; width: 880px; height: 240px;"></canvas><canvas class="xterm-link-layer" width="1100" height="300" style="z-index: 2; width: 880px; height: 240px;"></canvas><canvas class="xterm-cursor-layer" width="1100" height="300" style="z-index: 3; width: 880px; height: 240px;"></canvas></div></div></div></div></div><div class="pane-bottom-nav pane-bottom-nav--hidden-bar"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+</div>
+</div>
+
+
+<style>
+  #intercom-container { display: none }
+</style>
+<script>
+  (function() {
+    var config, internal, maintenance, unconfirmed;
+  
+    if (typeof Bugsnag !== 'undefined') {
+      Bugsnag.releaseStage = 'projects';
+      Bugsnag.metaData = {
+        project: {
+          id: '5202745'
+        }
+      };
+    }
+  
+    internal = 'false' === 'true';
+  
+    unconfirmed = 'false' === 'true';
+  
+    maintenance = 'false' === 'true';
+  
+    window.project_theme = "dark";
+  
+    config = {
+      access_token: 'DB225BFC62E75ECA0850234B49EC729B',
+      id: '5202745',
+      iframe: !internal,
+      internal: internal,
+      maintenance: maintenance,
+      pubnub_sub_key: 'sub-c-ddd2b552-e469-11e8-b4a9-e69ca2f1dc0c',
+      pubnub_token: '61A9977E50BB6BF3B08F96917082CFEE',
+      reviewing: 'false' === 'true'
+    };
+  
+    if (!maintenance && unconfirmed) {
+      document.addEventListener('DOMContentLoaded', function() {
+        $("#ide-anchor").addClass('dark');
+        return $("#ide-anchor").on('mouseover', function() {
+          $("#ide-anchor").off('mouseover');
+          return ReactDOM.render(React.createElement(Project, config), document.getElementById('ide-anchor'));
+        });
+      });
+    } else {
+      ReactDOM.render(React.createElement(Project, config), document.getElementById('ide-anchor'));
+    }
+  
+  }).call(this);
+</script>
+<div></div></body></html>
